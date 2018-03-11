@@ -54,7 +54,7 @@ def crawl(url, output=None):
 	print("Total URL's: " + str(len(path)))
 	
 	return path
-	if output:
+	if output is not None:
 		f=open(output,'w')
-		for ret in path:
+		for reg in path:
 			f.write(reg+"\n")
