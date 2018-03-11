@@ -12,7 +12,7 @@ Python 3.5.2 (default, Nov 23 2017, 16:37:01)
 Type "help", "copyright", "credits" or "license" for more information.
 >>> from crawler import crawl
 
->>> out = crawl('http://www.inseguro.com.br')
+>>> out = crawl("http://www.inseguro.com.br")
 Total URL's: 60
 
 >>> for url in out:
@@ -47,5 +47,5 @@ http://www.inseguro.com.br/search/label/OSINT
 ```
 ### Export to txt
 ```
->>> crawl('http://www.inseguro.com.br', output="www.inseguro.com.br.txt")
+>>> crawl("http://www.inseguro.com.br", output="www.inseguro.com.br.txt")
 ```
