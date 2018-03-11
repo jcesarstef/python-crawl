@@ -5,13 +5,14 @@ from bs4 import BeautifulSoup
 
 
 class crawl(object):
-	def __init__(self, url, output=None):
+	def __init__(self, url, output=None, limitreqs=20, verbose=False):
 		domain = re.findall("http[s]?://[a-z0-9.][a-z0-9-.]{0,61}[a-z0-9.]*", url)[0]
 		path = []
 		self.url = []
 		self.status_code = []
 		self.text = []
 		done = []
+		totalreqs = 0
 		if url not in path:
 			path.append(url)
 		notprocessfiles = (".jpg", ".gif", ".jpeg", ".ico", ".tiff" , ".png", ".bmp")
@@ -27,8 +28,11 @@ class crawl(object):
 			"link" : "href",
 		}
 		for urlvalue in path:
-			if urlvalue not in done:
+			if urlvalue not in done and totalreqs != limitreqs:
 				httpreq = requests.get(urlvalue)
+				totalreqs += 1
+				if verbose == True:
+					print("[" + str(totalreqs) + "] " + urlvalue)
 				soup = BeautifulSoup(str(httpreq.text), "lxml")	
 				for tag in extract:
 					# print(tag + " => " + extract[tag])
@@ -63,7 +67,7 @@ class crawl(object):
 						except KeyError:
 							pass
 				done.append(urlvalue)
-		print("Total URL's: " + str(len(path)))
+		print("Total URL's found: " + str(len(path)))
 		
 		if output is not None:
 			f=open(output,'w')
