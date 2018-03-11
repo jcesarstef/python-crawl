@@ -15,7 +15,7 @@ Type "help", "copyright", "credits" or "license" for more information.
 >>> out = crawl("http://www.inseguro.com.br")
 Total URL's: 60
 
->>> for url in out:
+>>> for url in out.url:
 ...     print(url)
 ... 
 http://www.inseguro.com.br
