@@ -10,8 +10,8 @@ def crawl(url, output=None):
 	done = []
 	if url not in path:
 		path.append(url)
-	# UA = "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/64.0.3282.186 Safari/537.36"
-	notprocessfiles = ("jpg", "gif", "jpeg", "ico", "tiff" , "png", "bmp")
+	# TODO
+	notprocessfiles = (".jpg", ".gif", ".jpeg", ".ico", ".tiff" , ".png", ".bmp")
 	extract = {
 		"a" : "href",
 		"img" : "src",
@@ -53,8 +53,8 @@ def crawl(url, output=None):
 			done.append(urlvalue)
 	print("Total URL's: " + str(len(path)))
 	
-	return path
 	if output is not None:
 		f=open(output,'w')
-		for reg in path:
-			f.write(reg+"\n")
+		for reg in done:
+			f.write(reg)
+		f.close()
