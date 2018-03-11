@@ -12,8 +12,14 @@ Python 3.5.2 (default, Nov 23 2017, 16:37:01)
 Type "help", "copyright", "credits" or "license" for more information.
 >>> from crawler import crawl
 
->>> out = crawl("http://www.inseguro.com.br")
-Total URL's: 60
+>>> out = crawl("http://www.inseguro.com.br", verbose=True, limitreqs=5)
+[1] http://www.inseguro.com.br
+[2] http://www.inseguro.com.br/search
+[3] http://www.inseguro.com.br/2017/10/bwapp-1-xss-reflected-overview.html
+[4] http://www.inseguro.com.br/2017/10/bwapp-1-xss-reflected-overview.html#more
+[5] http://www.inseguro.com.br/2017/10/bwapp-1-xss-reflected-overview.html#comment-form
+Total URL's found: 37
+
 
 >>> out.status_code[0]
 200
