@@ -12,7 +12,8 @@ Python 3.5.2 (default, Nov 23 2017, 16:37:01)
 Type "help", "copyright", "credits" or "license" for more information.
 >>> from crawler import crawl
 
->>> out = crawl("http://www.inseguro.com.br", verbose=True, limitreqs=5)
+>>> out = Crawl
+>>> out.crawl("http://www.inseguro.com.br", verbose=True, limitreqs=5)
 [1] http://www.inseguro.com.br
 [2] http://www.inseguro.com.br/search
 [3] http://www.inseguro.com.br/2017/10/bwapp-1-xss-reflected-overview.html
