@@ -3,8 +3,6 @@ import requests
 import re
 from bs4 import BeautifulSoup
 
-
-#
 def normalize(proburl, domain, path):
 	if not re.match("^http:|^https:|^//|^javascript:", proburl):
 		if not re.match("^/", proburl):
@@ -12,16 +10,13 @@ def normalize(proburl, domain, path):
 		if re.match(domain, proburl):
 			if proburl not in path:
 				return proburl
-
 		else:
 			proburl = domain + proburl
 			if proburl not in path:
 				return proburl
-
 	elif re.match(domain, proburl):
 		if proburl not in path:
 			return proburl
-	#print("proburl: " + proburl)
 
 class Crawl(object):
 	def crawl(self, url, output=None, limitreqs=20, verbose=False):
@@ -47,6 +42,7 @@ class Crawl(object):
 			"embed": "src",
 			"link": "href",
 		}
+		
 		for urlvalue in path:
 			if urlvalue not in done and totalreqs != limitreqs:
 				httpreq = requests.get(urlvalue)
@@ -61,15 +57,11 @@ class Crawl(object):
 							link = htmltag[extract[tag]]
 							#print("LINK: " + link)
 							internallink = normalize(link, domain, path)
-
 							if internallink is not None:
 								path.append(internallink)
 								self.url.append(link)
 								self.status_code.append(httpreq.status_code)
 								self.text.append(httpreq.text)
-
-
-						# print("Total URL's: "+ str(len(path)))
 						except KeyError:
 							pass
 				done.append(urlvalue)
