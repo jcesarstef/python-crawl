@@ -4,8 +4,27 @@ import re
 from bs4 import BeautifulSoup
 
 
+#
+def normalize(proburl, domain, path):
+	if not re.match("^http:|^https:|^//|^javascript:", proburl):
+		if not re.match("^/", proburl):
+			proburl = "/" + proburl
+		if re.match(domain, proburl):
+			if proburl not in path:
+				return proburl
+
+		else:
+			proburl = domain + proburl
+			if proburl not in path:
+				return proburl
+
+	elif re.match(domain, proburl):
+		if proburl not in path:
+			return proburl
+	#print("proburl: " + proburl)
+
 class Crawl(object):
-	def __init__(self, url, output=None, limitreqs=20, verbose=False):
+	def crawl(self, url, output=None, limitreqs=20, verbose=False):
 		domain = re.findall("http[s]?://[a-z0-9.][a-z0-9-.]{0,61}[a-z0-9.]*", url)[0]
 		path = []
 		self.url = []
@@ -40,30 +59,16 @@ class Crawl(object):
 					for htmltag in soup.find_all(tag):
 						try:
 							link = htmltag[extract[tag]]
-							# print(link)
-							if not re.match("^http:|^https:|^//|^javascript:", link):
-								# print(link)
-								if not re.match("^/", link):
-									link = "/" + link
-								if re.match(domain, link):
-									if link not in path:
-										path.append(link)
-										self.url.append(link)
-										self.status_code.append(httpreq.status_code)
-										self.text.append(httpreq.text)
-								else:
-									link = domain + link
-									if link not in path:
-										path.append(link)
-										self.url.append(link)
-										self.status_code.append(httpreq.status_code)
-										self.text.append(httpreq.text)
-							elif re.match(domain, link):
-								if link not in path:
-									path.append(link)
-									self.url.append(link)
-									self.status_code.append(httpreq.status_code)
-									self.text.append(httpreq.text)
+							#print("LINK: " + link)
+							internallink = normalize(link, domain, path)
+
+							if internallink is not None:
+								path.append(internallink)
+								self.url.append(link)
+								self.status_code.append(httpreq.status_code)
+								self.text.append(httpreq.text)
+
+
 						# print("Total URL's: "+ str(len(path)))
 						except KeyError:
 							pass
